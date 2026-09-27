@@ -70,12 +70,14 @@ export class LessonsService {
           create: vocabsToCreate.map((v) => ({
             japanese: v.japanese as string,
             vietnamese: v.vietnamese as string,
+            hanViet: v.hanViet,
           })),
           update: vocabsToUpdate.map((v) => ({
             where: { id: v.id },
             data: {
               japanese: v.japanese,
               vietnamese: v.vietnamese,
+              hanViet: v.hanViet,
             },
           })),
         },

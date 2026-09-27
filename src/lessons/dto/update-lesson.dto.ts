@@ -13,6 +13,10 @@ export class UpdateVocabularyDto {
   @IsString()
   @IsOptional()
   vietnamese?: string;
+
+  @IsString()
+  @IsOptional()
+  hanViet?: string;
 }
 
 export class UpdateLessonDto {

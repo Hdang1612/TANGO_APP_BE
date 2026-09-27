@@ -9,6 +9,10 @@ export class CreateVocabularyDto {
   @IsString()
   @IsNotEmpty()
   vietnamese: string;
+
+  @IsString()
+  @IsOptional()
+  hanViet?: string;
 }
 
 export class CreateLessonDto {
