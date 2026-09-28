@@ -15,6 +15,40 @@ export class CreateVocabularyDto {
   hanViet?: string;
 }
 
+export class KanjiExampleDto {
+  @IsString()
+  @IsNotEmpty()
+  word: string;
+
+  @IsString()
+  @IsOptional()
+  reading?: string;
+
+  @IsString()
+  @IsOptional()
+  meaning?: string;
+}
+
+export class CreateKanjiItemDto {
+  @IsString()
+  @IsNotEmpty()
+  character: string;
+
+  @IsString()
+  @IsNotEmpty()
+  meaning: string;
+
+  @IsString()
+  @IsOptional()
+  hanViet?: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => KanjiExampleDto)
+  @IsOptional()
+  examples?: KanjiExampleDto[];
+}
+
 export class CreateLessonDto {
   @IsString()
   @IsNotEmpty()
@@ -27,6 +61,12 @@ export class CreateLessonDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateVocabularyDto)
-  @ArrayMinSize(1)
+  @IsOptional()
   vocabularies: CreateVocabularyDto[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateKanjiItemDto)
+  @IsOptional()
+  kanjis?: CreateKanjiItemDto[];
 }
