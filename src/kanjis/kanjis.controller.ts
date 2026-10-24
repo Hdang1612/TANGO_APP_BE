@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { KanjisService } from './kanjis.service.js';
 import { CreateKanjiDto } from './dto/create-kanji.dto.js';
 import { UpdateKanjiDto } from './dto/update-kanji.dto.js';
@@ -13,7 +13,10 @@ export class KanjisController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('lessonId') lessonId?: string) {
+    if (lessonId) {
+      return this.kanjisService.findByLessonId(lessonId);
+    }
     return this.kanjisService.findAll();
   }
 

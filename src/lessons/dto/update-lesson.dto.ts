@@ -37,6 +37,14 @@ export class UpdateKanjiItemDto {
   @IsOptional()
   hanViet?: string;
 
+  @IsString()
+  @IsOptional()
+  onYomi?: string;
+
+  @IsString()
+  @IsOptional()
+  kunYomi?: string;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => KanjiExampleDto)

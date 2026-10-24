@@ -13,6 +13,17 @@ export class CreateKanjiDto {
   @IsNotEmpty()
   meaning: string;
 
+  @IsString()
+  @IsOptional()
+  onYomi?: string;
+
+  @IsString()
+  @IsOptional()
+  kunYomi?: string;
+
+  @IsOptional()
+  examples?: object;
+
   @IsUUID()
   @IsNotEmpty()
   lessonId: string;

@@ -42,6 +42,14 @@ export class CreateKanjiItemDto {
   @IsOptional()
   hanViet?: string;
 
+  @IsString()
+  @IsOptional()
+  onYomi?: string;
+
+  @IsString()
+  @IsOptional()
+  kunYomi?: string;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => KanjiExampleDto)
@@ -62,7 +70,7 @@ export class CreateLessonDto {
   @ValidateNested({ each: true })
   @Type(() => CreateVocabularyDto)
   @IsOptional()
-  vocabularies: CreateVocabularyDto[];
+  vocabularies?: CreateVocabularyDto[];
 
   @IsArray()
   @ValidateNested({ each: true })

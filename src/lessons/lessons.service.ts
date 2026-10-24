@@ -37,6 +37,8 @@ export class LessonsService {
             character: k.character,
             meaning: k.meaning,
             hanViet: k.hanViet,
+            onYomi: k.onYomi,
+            kunYomi: k.kunYomi,
             examples: k.examples ? (k.examples as any) : undefined,
           })),
         }
@@ -102,6 +104,8 @@ export class LessonsService {
           character: k.character as string,
           meaning: k.meaning as string,
           hanViet: k.hanViet,
+          onYomi: k.onYomi,
+          kunYomi: k.kunYomi,
           examples: k.examples ? (k.examples as any) : undefined,
         })),
         update: kanjisToUpdate.map((k) => ({
@@ -110,6 +114,8 @@ export class LessonsService {
             character: k.character,
             meaning: k.meaning,
             hanViet: k.hanViet,
+            onYomi: k.onYomi,
+            kunYomi: k.kunYomi,
             examples: k.examples ? (k.examples as any) : undefined,
           },
         })),

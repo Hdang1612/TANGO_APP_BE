@@ -33,6 +33,8 @@ model Kanji {
   character  String
   hanViet    String?
   meaning    String
+  onYomi     String?
+  kunYomi    String?
   examples   Json?
   lessonId   String
   lesson     Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)

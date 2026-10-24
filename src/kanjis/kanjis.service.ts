@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateKanjiDto } from './dto/create-kanji.dto.js';
 import { UpdateKanjiDto } from './dto/update-kanji.dto.js';
 
@@ -13,12 +13,22 @@ export class KanjisService {
   }
 
   findAll() {
-    return this.prisma.kanji.findMany();
+    return this.prisma.kanji.findMany({
+      include: { lesson: true },
+    });
   }
 
-  findOne(id: string) {
-    // When fetching a kanji, we optionally might want its vocabularies containing the kanji
-    return this.prisma.kanji.findUnique({ where: { id } });
+  findByLessonId(lessonId: string) {
+    return this.prisma.kanji.findMany({
+      where: { lessonId },
+      orderBy: { createdAt: 'asc' },
+    });
+  }
+
+  async findOne(id: string) {
+    const kanji = await this.prisma.kanji.findUnique({ where: { id } });
+    if (!kanji) throw new NotFoundException(`Kanji with ID ${id} not found`);
+    return kanji;
   }
 
   update(id: string, updateKanjiDto: UpdateKanjiDto) {
