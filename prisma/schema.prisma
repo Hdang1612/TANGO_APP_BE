@@ -41,3 +41,24 @@ model Kanji {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+model GrammarGroup {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  grammars    Grammar[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Grammar {
+  id          String       @id @default(uuid())
+  name        String
+  usage       String
+  structure   String?
+  examples    Json?
+  groupId     String?
+  group       GrammarGroup? @relation(fields: [groupId], references: [id], onDelete: SetNull)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
