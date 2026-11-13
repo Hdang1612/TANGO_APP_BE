@@ -4,6 +4,7 @@ import { CreateGrammarGroupDto } from './dto/create-grammar-group.dto.js';
 import { UpdateGrammarGroupDto } from './dto/update-grammar-group.dto.js';
 import { CreateGrammarDto } from './dto/create-grammar.dto.js';
 import { UpdateGrammarDto } from './dto/update-grammar.dto.js';
+import { GetGrammarQueryDto, GetGrammarGroupsQueryDto } from './dto/get-grammar-query.dto.js';
 
 @Injectable()
 export class GrammarService {
@@ -11,15 +12,46 @@ export class GrammarService {
 
   // ─── Grammar Groups ────────────────────────────────────────────────────────
 
-  findAllGroups() {
-    return this.prisma.grammarGroup.findMany({
-      include: {
-        grammars: {
-          orderBy: { createdAt: 'asc' },
+  async findAllGroups(query?: GetGrammarGroupsQueryDto) {
+    const page = query?.page ? Number(query.page) : undefined;
+    const limit = query?.limit ? Number(query.limit) : undefined;
+
+    if (!page && !limit) {
+      return this.prisma.grammarGroup.findMany({
+        include: {
+          grammars: {
+            orderBy: { createdAt: 'asc' },
+          },
         },
-      },
-      orderBy: { createdAt: 'asc' },
-    });
+        orderBy: { createdAt: 'asc' },
+      });
+    }
+
+    const currentPage = Math.max(1, page || 1);
+    const take = Math.max(1, limit || 10);
+    const skip = (currentPage - 1) * take;
+
+    const [data, total] = await Promise.all([
+      this.prisma.grammarGroup.findMany({
+        include: {
+          grammars: {
+            orderBy: { createdAt: 'asc' },
+          },
+        },
+        skip,
+        take,
+        orderBy: { createdAt: 'asc' },
+      }),
+      this.prisma.grammarGroup.count(),
+    ]);
+
+    return {
+      data,
+      total,
+      page: currentPage,
+      limit: take,
+      totalPages: Math.ceil(total / take),
+    };
   }
 
   async findOneGroup(id: string) {
@@ -47,11 +79,50 @@ export class GrammarService {
 
   // ─── Grammar Items ─────────────────────────────────────────────────────────
 
-  findAllGrammars() {
-    return this.prisma.grammar.findMany({
-      include: { group: true },
-      orderBy: { createdAt: 'asc' },
-    });
+  async findAllGrammars(query?: GetGrammarQueryDto) {
+    const page = query?.page ? Number(query.page) : undefined;
+    const limit = query?.limit ? Number(query.limit) : undefined;
+    const groupId = query?.groupId;
+
+    const where: any = {};
+    if (groupId) {
+      if (groupId === 'none') {
+        where.groupId = null;
+      } else if (groupId !== 'all') {
+        where.groupId = groupId;
+      }
+    }
+
+    if (!page && !limit) {
+      return this.prisma.grammar.findMany({
+        where,
+        include: { group: true },
+        orderBy: { createdAt: 'asc' },
+      });
+    }
+
+    const currentPage = Math.max(1, page || 1);
+    const take = Math.max(1, limit || 10);
+    const skip = (currentPage - 1) * take;
+
+    const [data, total] = await Promise.all([
+      this.prisma.grammar.findMany({
+        where,
+        include: { group: true },
+        skip,
+        take,
+        orderBy: { createdAt: 'asc' },
+      }),
+      this.prisma.grammar.count({ where }),
+    ]);
+
+    return {
+      data,
+      total,
+      page: currentPage,
+      limit: take,
+      totalPages: Math.ceil(total / take),
+    };
   }
 
   async findOneGrammar(id: string) {

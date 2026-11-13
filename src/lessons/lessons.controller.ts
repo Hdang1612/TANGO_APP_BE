@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, Query } from '@nestjs/common';
 import { LessonsService } from './lessons.service.js';
 import { CreateLessonDto } from './dto/create-lesson.dto.js';
 import { UpdateLessonDto } from './dto/update-lesson.dto.js';
+import { GetLessonsQueryDto } from './dto/get-lessons-query.dto.js';
 
 @Controller('lessons')
 export class LessonsController {
@@ -13,8 +14,8 @@ export class LessonsController {
   }
 
   @Get()
-  findAll() {
-    return this.lessonsService.findAll();
+  findAll(@Query() query: GetLessonsQueryDto) {
+    return this.lessonsService.findAll(query);
   }
 
   @Get(':id')

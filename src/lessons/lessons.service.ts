@@ -2,15 +2,54 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateLessonDto } from './dto/create-lesson.dto.js';
 import { UpdateLessonDto } from './dto/update-lesson.dto.js';
+import { GetLessonsQueryDto } from './dto/get-lessons-query.dto.js';
 
 @Injectable()
 export class LessonsService {
   constructor(private prisma: PrismaService) {}
 
-  async findAll() {
-    return this.prisma.lesson.findMany({
-      include: { vocabularies: true, kanjis: true },
-    });
+  async findAll(query?: GetLessonsQueryDto) {
+    const page = query?.page ? Number(query.page) : undefined;
+    const limit = query?.limit ? Number(query.limit) : undefined;
+    const type = query?.type;
+
+    const where: any = {};
+    if (type === 'vocabulary') {
+      where.vocabularies = { some: {} };
+    } else if (type === 'kanji') {
+      where.kanjis = { some: {} };
+    }
+
+    if (!page && !limit) {
+      return this.prisma.lesson.findMany({
+        where,
+        include: { vocabularies: true, kanjis: true },
+        orderBy: { createdAt: 'desc' },
+      });
+    }
+
+    const currentPage = Math.max(1, page || 1);
+    const take = Math.max(1, limit || 10);
+    const skip = (currentPage - 1) * take;
+
+    const [data, total] = await Promise.all([
+      this.prisma.lesson.findMany({
+        where,
+        include: { vocabularies: true, kanjis: true },
+        skip,
+        take,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.lesson.count({ where }),
+    ]);
+
+    return {
+      data,
+      total,
+      page: currentPage,
+      limit: take,
+      totalPages: Math.ceil(total / take),
+    };
   }
 
   async findOne(id: string) {

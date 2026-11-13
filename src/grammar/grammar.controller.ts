@@ -1,11 +1,12 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete,
+  Controller, Get, Post, Body, Patch, Param, Delete, Query,
 } from '@nestjs/common';
 import { GrammarService } from './grammar.service.js';
 import { CreateGrammarGroupDto } from './dto/create-grammar-group.dto.js';
 import { UpdateGrammarGroupDto } from './dto/update-grammar-group.dto.js';
 import { CreateGrammarDto } from './dto/create-grammar.dto.js';
 import { UpdateGrammarDto } from './dto/update-grammar.dto.js';
+import { GetGrammarQueryDto, GetGrammarGroupsQueryDto } from './dto/get-grammar-query.dto.js';
 
 @Controller()
 export class GrammarController {
@@ -14,8 +15,8 @@ export class GrammarController {
   // ─── Grammar Groups ────────────────────────────────────────────────────────
 
   @Get('grammar-groups')
-  findAllGroups() {
-    return this.grammarService.findAllGroups();
+  findAllGroups(@Query() query: GetGrammarGroupsQueryDto) {
+    return this.grammarService.findAllGroups(query);
   }
 
   @Get('grammar-groups/:id')
@@ -41,8 +42,8 @@ export class GrammarController {
   // ─── Grammar Items ─────────────────────────────────────────────────────────
 
   @Get('grammars')
-  findAllGrammars() {
-    return this.grammarService.findAllGrammars();
+  findAllGrammars(@Query() query: GetGrammarQueryDto) {
+    return this.grammarService.findAllGrammars(query);
   }
 
   @Get('grammars/:id')

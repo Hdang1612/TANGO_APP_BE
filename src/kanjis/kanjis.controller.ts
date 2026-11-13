@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { KanjisService } from './kanjis.service.js';
 import { CreateKanjiDto } from './dto/create-kanji.dto.js';
 import { UpdateKanjiDto } from './dto/update-kanji.dto.js';
+import { GetKanjisQueryDto } from './dto/get-kanjis-query.dto.js';
 
 @Controller('kanjis')
 export class KanjisController {
@@ -13,11 +14,11 @@ export class KanjisController {
   }
 
   @Get()
-  findAll(@Query('lessonId') lessonId?: string) {
-    if (lessonId) {
-      return this.kanjisService.findByLessonId(lessonId);
+  findAll(@Query() query: GetKanjisQueryDto) {
+    if (query.lessonId) {
+      return this.kanjisService.findByLessonId(query.lessonId, query);
     }
-    return this.kanjisService.findAll();
+    return this.kanjisService.findAll(query);
   }
 
   @Get(':id')
