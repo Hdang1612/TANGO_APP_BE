@@ -3,6 +3,7 @@ import { KanjisService } from './kanjis.service.js';
 import { CreateKanjiDto } from './dto/create-kanji.dto.js';
 import { UpdateKanjiDto } from './dto/update-kanji.dto.js';
 import { GetKanjisQueryDto } from './dto/get-kanjis-query.dto.js';
+import { TestQueryDto } from '../common/dto/test-query.dto.js';
 
 @Controller('kanjis')
 export class KanjisController {
@@ -19,6 +20,16 @@ export class KanjisController {
       return this.kanjisService.findByLessonId(query.lessonId, query);
     }
     return this.kanjisService.findAll(query);
+  }
+
+  @Get('test-kanjis')
+  getRandomKanjis(@Query() query: TestQueryDto) {
+    return this.kanjisService.getRandomKanjis(query.limit);
+  }
+
+  @Get('random')
+  getRandomKanjisAlias(@Query() query: TestQueryDto) {
+    return this.kanjisService.getRandomKanjis(query.limit);
   }
 
   @Get(':id')

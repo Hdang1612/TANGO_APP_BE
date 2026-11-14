@@ -52,6 +52,16 @@ export class LessonsService {
     };
   }
 
+  async getRandomVocabularies(limit: number = 20) {
+    const take = Math.max(1, Math.min(100, Number(limit) || 20));
+    return this.prisma.$queryRaw<any[]>`
+      SELECT id, japanese, vietnamese, "hanViet", "lessonId", "createdAt", "updatedAt"
+      FROM "Vocabulary"
+      ORDER BY RANDOM()
+      LIMIT ${take}
+    `;
+  }
+
   async findOne(id: string) {
     const lesson = await this.prisma.lesson.findUnique({
       where: { id },

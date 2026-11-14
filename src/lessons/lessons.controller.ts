@@ -3,6 +3,7 @@ import { LessonsService } from './lessons.service.js';
 import { CreateLessonDto } from './dto/create-lesson.dto.js';
 import { UpdateLessonDto } from './dto/update-lesson.dto.js';
 import { GetLessonsQueryDto } from './dto/get-lessons-query.dto.js';
+import { TestQueryDto } from '../common/dto/test-query.dto.js';
 
 @Controller('lessons')
 export class LessonsController {
@@ -16,6 +17,16 @@ export class LessonsController {
   @Get()
   findAll(@Query() query: GetLessonsQueryDto) {
     return this.lessonsService.findAll(query);
+  }
+
+  @Get('test-vocabularies')
+  getRandomVocabularies(@Query() query: TestQueryDto) {
+    return this.lessonsService.getRandomVocabularies(query.limit);
+  }
+
+  @Get('random-vocabularies')
+  getRandomVocabulariesAlias(@Query() query: TestQueryDto) {
+    return this.lessonsService.getRandomVocabularies(query.limit);
   }
 
   @Get(':id')
