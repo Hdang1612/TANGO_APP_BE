@@ -21,6 +21,14 @@ export class CreateKanjiDto {
   @IsOptional()
   kunYomi?: string;
 
+  @IsString()
+  @IsOptional()
+  mnemonic?: string;
+
+  @IsString()
+  @IsOptional()
+  mnemonicTip?: string;
+
   @IsOptional()
   examples?: object;
 

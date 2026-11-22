@@ -86,7 +86,7 @@ export class KanjisService {
   async getRandomKanjis(limit: number = 20) {
     const take = Math.max(1, Math.min(100, Number(limit) || 20));
     return this.prisma.$queryRaw<any[]>`
-      SELECT id, character, "hanViet", meaning, "onYomi", "kunYomi", examples, "lessonId", "createdAt", "updatedAt"
+      SELECT id, character, "hanViet", meaning, "onYomi", "kunYomi", mnemonic, "mnemonicTip", examples, "lessonId", "createdAt", "updatedAt"
       FROM "Kanji"
       ORDER BY RANDOM()
       LIMIT ${take}
