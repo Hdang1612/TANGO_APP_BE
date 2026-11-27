@@ -92,7 +92,7 @@ export class LessonsService {
             mnemonicTip: k.mnemonicTip,
             examples: k.examples ? (k.examples as any) : undefined,
           })),
-        }
+        },
       },
       include: { vocabularies: true, kanjis: true },
     });

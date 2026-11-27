@@ -1,4 +1,11 @@
-import { IsString, IsOptional, IsArray, ValidateNested, ArrayMinSize, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsArray,
+  ValidateNested,
+  ArrayMinSize,
+  IsNotEmpty,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class CreateVocabularyDto {

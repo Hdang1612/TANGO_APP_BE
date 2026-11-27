@@ -12,4 +12,3 @@ import { GrammarModule } from './grammar/grammar.module.js';
   providers: [AppService],
 })
 export class AppModule {}
-

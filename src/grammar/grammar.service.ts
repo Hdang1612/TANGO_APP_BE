@@ -4,7 +4,10 @@ import { CreateGrammarGroupDto } from './dto/create-grammar-group.dto.js';
 import { UpdateGrammarGroupDto } from './dto/update-grammar-group.dto.js';
 import { CreateGrammarDto } from './dto/create-grammar.dto.js';
 import { UpdateGrammarDto } from './dto/update-grammar.dto.js';
-import { GetGrammarQueryDto, GetGrammarGroupsQueryDto } from './dto/get-grammar-query.dto.js';
+import {
+  GetGrammarQueryDto,
+  GetGrammarGroupsQueryDto,
+} from './dto/get-grammar-query.dto.js';
 
 @Injectable()
 export class GrammarService {
@@ -59,7 +62,8 @@ export class GrammarService {
       where: { id },
       include: { grammars: { orderBy: { createdAt: 'asc' } } },
     });
-    if (!group) throw new NotFoundException(`GrammarGroup with ID ${id} not found`);
+    if (!group)
+      throw new NotFoundException(`GrammarGroup with ID ${id} not found`);
     return group;
   }
 
@@ -130,7 +134,8 @@ export class GrammarService {
       where: { id },
       include: { group: true },
     });
-    if (!grammar) throw new NotFoundException(`Grammar with ID ${id} not found`);
+    if (!grammar)
+      throw new NotFoundException(`Grammar with ID ${id} not found`);
     return grammar;
   }
 

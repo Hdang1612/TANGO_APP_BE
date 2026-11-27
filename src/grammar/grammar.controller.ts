@@ -1,12 +1,22 @@
 import {
-  Controller, Get, Post, Body, Patch, Param, Delete, Query,
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
 } from '@nestjs/common';
 import { GrammarService } from './grammar.service.js';
 import { CreateGrammarGroupDto } from './dto/create-grammar-group.dto.js';
 import { UpdateGrammarGroupDto } from './dto/update-grammar-group.dto.js';
 import { CreateGrammarDto } from './dto/create-grammar.dto.js';
 import { UpdateGrammarDto } from './dto/update-grammar.dto.js';
-import { GetGrammarQueryDto, GetGrammarGroupsQueryDto } from './dto/get-grammar-query.dto.js';
+import {
+  GetGrammarQueryDto,
+  GetGrammarGroupsQueryDto,
+} from './dto/get-grammar-query.dto.js';
 
 @Controller()
 export class GrammarController {

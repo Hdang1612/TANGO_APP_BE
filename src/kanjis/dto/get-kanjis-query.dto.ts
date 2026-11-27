@@ -6,4 +6,3 @@ export class GetKanjisQueryDto extends PaginationQueryDto {
   @IsString()
   lessonId?: string;
 }
-

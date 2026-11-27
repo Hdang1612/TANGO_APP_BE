@@ -14,4 +14,3 @@ export class PaginationQueryDto {
   @Min(1)
   limit?: number;
 }
-

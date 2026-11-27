@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { KanjisService } from './kanjis.service.js';
 import { CreateKanjiDto } from './dto/create-kanji.dto.js';
 import { UpdateKanjiDto } from './dto/update-kanji.dto.js';

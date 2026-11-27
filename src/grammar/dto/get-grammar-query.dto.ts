@@ -8,4 +8,3 @@ export class GetGrammarQueryDto extends PaginationQueryDto {
 }
 
 export class GetGrammarGroupsQueryDto extends PaginationQueryDto {}
-

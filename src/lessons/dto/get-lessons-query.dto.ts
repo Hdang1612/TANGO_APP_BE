@@ -6,4 +6,3 @@ export class GetLessonsQueryDto extends PaginationQueryDto {
   @IsIn(['vocabulary', 'kanji'])
   type?: 'vocabulary' | 'kanji';
 }
-
