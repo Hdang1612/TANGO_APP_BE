@@ -45,6 +45,14 @@ export class UpdateKanjiItemDto {
   @IsOptional()
   kunYomi?: string;
 
+  @IsString()
+  @IsOptional()
+  mnemonic?: string;
+
+  @IsString()
+  @IsOptional()
+  mnemonicTip?: string;
+
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => KanjiExampleDto)

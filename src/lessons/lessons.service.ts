@@ -88,6 +88,8 @@ export class LessonsService {
             hanViet: k.hanViet,
             onYomi: k.onYomi,
             kunYomi: k.kunYomi,
+            mnemonic: k.mnemonic,
+            mnemonicTip: k.mnemonicTip,
             examples: k.examples ? (k.examples as any) : undefined,
           })),
         }
@@ -155,6 +157,8 @@ export class LessonsService {
           hanViet: k.hanViet,
           onYomi: k.onYomi,
           kunYomi: k.kunYomi,
+          mnemonic: k.mnemonic,
+          mnemonicTip: k.mnemonicTip,
           examples: k.examples ? (k.examples as any) : undefined,
         })),
         update: kanjisToUpdate.map((k) => ({
@@ -165,6 +169,8 @@ export class LessonsService {
             hanViet: k.hanViet,
             onYomi: k.onYomi,
             kunYomi: k.kunYomi,
+            mnemonic: k.mnemonic,
+            mnemonicTip: k.mnemonicTip,
             examples: k.examples ? (k.examples as any) : undefined,
           },
         })),
